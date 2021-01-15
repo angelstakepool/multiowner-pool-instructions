@@ -80,10 +80,10 @@ cardano-hw-cli shelley address key-gen
   --verification-key-file hw-stake1.vkey
   --hw-signing-file stake1.hwsfile
 
-cardano-hw-cli shelley address key-gen <BR>
-  --path 1852H/1815H/0H/0/0 <BR>
-  --verification-key-file hw-payment1.vkey <BR>
-  --hw-signing-file payment1.hwsfile <BR>
+cardano-hw-cli shelley address key-gen
+  --path 1852H/1815H/0H/0/0
+  --verification-key-file hw-payment1.vkey
+  --hw-signing-file payment1.hwsfile
 ```
 Co-owner:
 ```
