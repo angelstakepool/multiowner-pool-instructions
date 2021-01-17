@@ -1,4 +1,4 @@
-# Instructions (General workflow) on setting up a multi-owner pool, having funds secured in hw devices
+# Instructions (General workflow) on setting up a multi-owner pool (from scratch), having funds secured in hw devices
 
 *Both owners use hw wallets for secured PLEDGE*
 
