@@ -184,7 +184,7 @@ cardano-cli transaction assemble \
 ```
 then submit tx-pool.multisign in a hot node
 ```
-cardano-cli shelley transaction submit
+cardano-cli transaction submit
 ```
 
 ... and Done !!! :+1:
