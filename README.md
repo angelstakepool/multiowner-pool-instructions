@@ -75,24 +75,24 @@ Both owner and co-owner would delegate to this pool using interactive delegation
 
 Owner:
 ```
-cardano-hw-cli shelley address key-gen
+cardano-hw-cli address key-gen
   --path 1852H/1815H/0H/2/0
   --verification-key-file hw-stake1.vkey
   --hw-signing-file stake1.hwsfile
 
-cardano-hw-cli shelley address key-gen
+cardano-hw-cli address key-gen
   --path 1852H/1815H/0H/0/0
   --verification-key-file hw-payment1.vkey
   --hw-signing-file payment1.hwsfile
 ```
 Co-owner:
 ```
-cardano-hw-cli shelley address key-gen
+cardano-hw-cli address key-gen
   --path 1852H/1815H/0H/2/0
   --verification-key-file hw-stake2.vkey
   --hw-signing-file stake2.hwsfile
 
-cardano-hw-cli shelley address key-gen
+cardano-hw-cli address key-gen
   --path 1852H/1815H/0H/0/0 
   --verification-key-file hw-payment2.vkey 
   --hw-signing-file payment2.hwsfile
@@ -156,7 +156,7 @@ First create a witness using my hw-stake1.vkey in desktop (where ledger is conne
 
 *My hw-stake1 key*
 ```
-cardano-hw-cli shelley transaction witness
+cardano-hw-cli transaction witness
   --tx-body-file tx-pool.raw
   --hw-signing-file stake1.hwsfile
   --mainnet
@@ -166,7 +166,7 @@ and then send **tx-pool.raw** to co-owner, who will create a witness as:
 
 *Co-owner hw-stake2 key*
 ```
-cardano-hw-cli shelley transaction witness
+cardano-hw-cli transaction witness
   --tx-body-file tx-pool.raw
   --hw-signing-file stake2.hwsfile
   --mainnet
