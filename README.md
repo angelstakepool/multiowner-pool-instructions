@@ -15,6 +15,8 @@ cardano-cli address key-gen ...
 cardano-cli stake-address key-gen ...
 cardano-cli address build ...
 cardano-cli stake-address build ...
+
+Fund cli-payment with ~510 ADA
 ```
 ## STEP 2 Create node-cold, vrf and kes keys
 ```
@@ -112,6 +114,7 @@ cardano-cli stake-pool registration-certificate \
   --pool-reward-account-verification-key-file cli-stake-rewards.vkey \
   --pool-owner-stake-verification-key-file hw-stake1.vkey \
   --pool-owner-stake-verification-key-file hw-stake2.vkey \
+  --pool-owner-stake-verification-key-file cli-stake-rewards.vkey \   ->  [ this is optional]
   --mainnet \
   --single-host-pool-relay <IP of public relay> --pool-relay-port <port> \
   --metadata-url <domain>/pool-name.json \
