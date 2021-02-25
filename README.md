@@ -1,6 +1,8 @@
-# Instructions (General workflow) on setting up a multi-owner pool (from scratch), having funds secured in hw devices
+# Instructions (General workflow) on setting up a multi-owner pool (from scratch), having funds secured in hw wallet devices
 
 *Both owners use hw wallets for secured PLEDGE*
+
+Note: A single owner pool with pledge secured in hw wallet, is a **particular** case of this
 
 ## Requirements
 
@@ -30,7 +32,7 @@ cardano-cli stake-address registration-certificate ...
 ```
 ## STEP 4 Register single-Owner pool and delegation certificate
 
-Single owner Pool (1st iteration)
+Single owner Pool (1st iteration - Using CLI keys for rewards & Owner)
 ```
 cardano-cli stake-pool registration-certificate \
   --cold-verification-key-file node-cold.vkey \
@@ -69,7 +71,7 @@ and submit it to the chain
 cardano-cli shelley transaction submit
 ```
 
-## STEP 5 Delegate hw wallets to pool using Daedalus or Yoroi
+## STEP 5 Delegate hw wallets to registered pool using Daedalus or Yoroi
 
 Both owner and co-owner would delegate to this pool using interactive delegation in either Daedalus or Yoroi (~2.18 ADA)
 
@@ -81,11 +83,6 @@ cardano-hw-cli address key-gen
   --path 1852H/1815H/0H/2/0
   --verification-key-file hw-stake1.vkey
   --hw-signing-file stake1.hwsfile
-
-cardano-hw-cli address key-gen
-  --path 1852H/1815H/0H/0/0
-  --verification-key-file hw-payment1.vkey
-  --hw-signing-file payment1.hwsfile
 ```
 Co-owner:
 ```
@@ -93,17 +90,12 @@ cardano-hw-cli address key-gen
   --path 1852H/1815H/0H/2/0
   --verification-key-file hw-stake2.vkey
   --hw-signing-file stake2.hwsfile
-
-cardano-hw-cli address key-gen
-  --path 1852H/1815H/0H/0/0 
-  --verification-key-file hw-payment2.vkey 
-  --hw-signing-file payment2.hwsfile
  ```
 ## STEP 7 Register multi-owner pool certificate
 
 Get **hw-stake2.vkey** from co-owner
 
-Create another pool certificate using both owners (hw-stake1.vkey & hw-stake2.vkey), specifying a cli-stake-rewards for rewards. Rewards would be distributed manually after each epoch
+Create another pool certificate (iteration 2) using public keys from both hw wallet owners (hw-stake1.vkey & hw-stake2.vkey), specifying cli-stake-rewards.vkey for rewards (rewards can only go to a single account, so they would need to be distributed manually after each epoch); cli-stake-rewards.vkey could also be left [optionally] as an owner, which might be useful in some scenarios. Effective pledge would be the sum of all the balances in all the owners
 ```
 cardano-cli stake-pool registration-certificate \
   --cold-verification-key-file node-cold.vkey \
@@ -114,12 +106,12 @@ cardano-cli stake-pool registration-certificate \
   --pool-reward-account-verification-key-file cli-stake-rewards.vkey \
   --pool-owner-stake-verification-key-file hw-stake1.vkey \
   --pool-owner-stake-verification-key-file hw-stake2.vkey \
-  --pool-owner-stake-verification-key-file cli-stake-rewards.vkey \   ->  [ this is optional]
+  --pool-owner-stake-verification-key-file cli-stake-rewards.vkey \   ->  [ optional]
   --mainnet \
   --single-host-pool-relay <IP of public relay> --pool-relay-port <port> \
   --metadata-url <domain>/pool-name.json \
   --metadata-hash <hash of metadata> \
-  --out-file pool.cert
+  --out-file pool2.cert
 ```
 
 Then create a transaction tx-pool.raw that includes this pool certificate:
@@ -129,7 +121,7 @@ cardano-cli transaction build-raw \
      --tx-out $(cat cli-payment.addr)+returnChange \
      --invalid-hereafter <ttl> \
      --fee <fee> \
-     --certificate-file pool.cert \
+     --certificate-file pool2.cert \
      --out-file tx-pool.raw
 ```
 
