@@ -11,7 +11,7 @@ https://github.com/vacuumlabs/cardano-hw-cli
 
 ## STEP 1 Create CLI keys and address
 
-Generate cli-payment and cli-stake-reward keys, derive address and fund it with at least 503 ADA for pool deposit
+Generate cli-payment and cli-stake-reward keys, derive address and fund it for pool deposit
 ```
 cardano-cli address key-gen ...
 cardano-cli stake-address key-gen ...
