@@ -2,7 +2,7 @@
 
 *Both owners use hw wallets for secured PLEDGE*
 
-Note: A single owner pool with pledge secured in hw wallet, is a **particular** case of this
+Note: A single owner pool with pledge secured in hw wallet, is a **particular** case of this, the only change would be the rewards account for which the hw wallet should be used
 
 ## Requirements
 
@@ -96,6 +96,7 @@ cardano-hw-cli address key-gen
 Get **hw-stake2.vkey** from co-owner
 
 Create another pool certificate (iteration 2) using public keys from both hw wallet owners (hw-stake1.vkey & hw-stake2.vkey), specifying cli-stake-rewards.vkey for rewards (rewards can only go to a single account, so they would need to be distributed manually after each epoch); cli-stake-rewards.vkey could also be left [optionally] as an owner, which might be useful in some scenarios. Effective pledge would be the sum of all the balances in all the owners
+  
 ```
 cardano-cli stake-pool registration-certificate \
   --cold-verification-key-file node-cold.vkey \
@@ -113,7 +114,9 @@ cardano-cli stake-pool registration-certificate \
   --metadata-hash <hash of metadata> \
   --out-file pool2.cert
 ```
-
+*Important note*: In the particular case of a single owner, hw-stake1.vkey should also be the rewards account (pool-reward-account-verification-key-file), so that all the rewards are received in the hw wallet, which is much simpler and would not need to maintain a different rewards account.
+  
+  
 Then create a transaction tx-pool.raw that includes this pool certificate:
 ```
 cardano-cli transaction build-raw \
